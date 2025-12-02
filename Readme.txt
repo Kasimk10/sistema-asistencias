@@ -1,46 +1,5 @@
-Trabajo universitario de Programación 1.
+Para mi proyecto final de la materia Programación I, desarrollé una aplicación de consola en Python que simula un sistema integral de gestión académica. El objetivo fue crear una herramienta capaz de administrar alumnos, profesores, cursos y asistencias de manera eficiente, manejando persistencia de datos sin depender de bases de datos externas.
 
-Este proyecto es una aplicación de consola desarrollada en **Python** que simula un sistema integral de gestión académica. Permite administrar alumnos, profesores, cursos y el control de asistencias, utilizando persistencia de datos en múltiples formatos.
+El sistema cuenta con tres perfiles de usuario diferenciados. Diseñé el módulo de Profesores para permitir la toma de asistencia (validando fechas y cupos) y la gestión de clases; el módulo de Estudiantes, que facilita la autogestión y consulta de faltas en tiempo real; y un perfil de Administrador robusto, capaz de gestionar el ABM de alumnos e inscripciones, con una lógica que detecta y previene conflictos de horarios automáticamente.
 
-
- Características Principales
-
-El sistema maneja tres perfiles de usuario con permisos diferenciados:
-
-### 👨‍🏫 Perfil Profesor
-* **Pasar Lista:** Registro de asistencia (Presente, Ausente, Tarde) validando fechas y cupos.
-* **Gestión:** Visualización de clases asignadas y listado de alumnos.
-* **Modificación:** Capacidad de corregir estados de asistencia pasados.
-
-### 👨‍🎓 Perfil Estudiante
-* **Autogestión:** Consulta de asistencias en tiempo real por materia o visión general.
-* **Reportes:** Visualización de porcentaje de faltas en formato tabular.
-
-### 🛠 Perfil Administrador
-* **ABM de Alumnos:** Alta, Baja y Modificación de estudiantes.
-* **Inscripciones:** Asignación de alumnos a materias validando **conflictos de horarios** y cupos.
-* **Mantenimiento del Sistema:** Funcionalidad de "Reinicio del Sistema" que procesa los logs de cambios y actualiza los archivos maestros.
-
-## 💻 Aspectos Técnicos Destacados
-
-Este proyecto va más allá de un simple script, implementando lógica de negocio compleja:
-
-* **Persistencia de Datos Híbrida:** Manejo simultáneo de archivos **CSV** (para listados), **JSON** (para configuraciones y diccionarios complejos) y **TXT** (para registros planos).
-* **Sistema de Logs y Batch Processing:** Los cambios no se escriben directamente en los archivos maestros para evitar corrupciones. Se generan archivos de "cambios" (logs) que luego se procesan en lote mediante la función `comparar_archivos()` y `aplicar_cambios_*`.
-* **Algoritmos de Búsqueda y Validación:** Validaciones robustas de tipos de datos, rangos numéricos y existencia de registros.
-* **Recursividad:** Implementada en la navegación de menús y listado de materias (`mostrar_nombres_materias`).
-
-## 🛠️ Tecnologías Utilizadas
-
-* **Lenguaje:** Python 3.x
-* **Librerías:** `json`, `os` (Librerías estándar, sin dependencias externas).
-
-## 📋 Estructura de Archivos
-
-El sistema depende de la siguiente estructura de datos para funcionar:
-
-* `Segunda_entrega_1.py`: Código fuente principal.
-* `estudiantes.csv`: Base de datos de alumnos.
-* `profesores.csv` / `admin.json`: Credenciales de acceso.
-* `ids_clases.json`: Metadatos de las materias (Horarios, Nombres).
-* `asistencia_alumnos.txt`: Historial de asistencias (JSON Lines).
+A nivel técnico, el mayor desafío fue implementar una arquitectura de persistencia híbrida, combinando archivos CSV, JSON y TXT según la estructura del dato. Para garantizar la integridad de la información, desarrollé un sistema de "Batch Processing": los cambios no se escriben directo en los archivos maestros, sino que se generan logs temporales que luego se procesan en lote, evitando así la corrupción de datos. Todo el desarrollo fue realizado en Python 3 utilizando únicamente librerías estándar.
